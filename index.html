@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junaid ❤️ Zunera Amber</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+/* ================= BODY ================= */
+body{
+    margin:0;
+    padding:0;
+    background:#0b0c1a;
+    color:white;
+    font-family:'Cinzel', serif;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* ================= STARS ================= */
+.stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+    animation: moveStars 60s linear infinite;
+    z-index:0;
+}
+@keyframes moveStars{
+    from{background-position:0 0;}
+    to{background-position:-10000px 5000px;}
+}
+
+/* ================= MOON ================= */
+.moon{
+    position:fixed;
+    top:10%;
+    right:15%;
+    width:120px;
+    height:120px;
+    background:radial-gradient(circle,#fff 40%,#d9d9ff 70%,transparent 80%);
+    border-radius:50%;
+    box-shadow:0 0 40px rgba(255,255,255,0.8);
+    animation:pulse 4s infinite alternate;
+    z-index:1;
+}
+@keyframes pulse{
+    from{box-shadow:0 0 30px rgba(255,255,255,0.6);}
+    to{box-shadow:0 0 70px rgba(255,255,255,1);}
+}
+
+/* ================= PETALS ================= */
+.petal{
+    position:fixed;
+    top:-50px;
+    font-size:24px;
+    animation:fall linear infinite;
+    z-index:2;
+}
+@keyframes fall{
+    to{
+        transform:translateY(110vh) rotate(360deg);
+    }
+}
+
+/* ================= HEARTS ================= */
+.heart{
+    position:fixed;
+    top:-50px;
+    font-size:22px;
+    animation:fall 4s linear infinite;
+    z-index:3;
+}
+
+/* ================= CONTENT ================= */
+.content{
+    position:relative;
+    z-index:4;
+    margin-top:120px;
+    padding:20px;
+}
+
+h1{
+    font-size:2.5em;
+}
+
+.love-letter{
+    margin:20px auto;
+    width:85%;
+    min-height:120px;
+    font-size:1.3em;
+    line-height:1.8em;
+    font-family:'Noto Nastaliq Urdu', serif;
+    direction:rtl;
+}
+
+.translation{
+    font-size:1em;
+    margin-top:20px;
+    opacity:0.8;
+}
+
+button{
+    padding:12px 25px;
+    margin:15px;
+    border:none;
+    border-radius:30px;
+    font-size:1em;
+    cursor:pointer;
+    background:#b38b00;
+    color:white;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#e6b800;
+}
+
+/* Golden Yes Screen */
+#yesScreen{
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle,#ffd700,#b8860b);
+    color:#111;
+    z-index:10;
+    padding-top:200px;
+    font-size:2em;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+<div class="moon"></div>
+
+<div class="content">
+<h1>Junaid ❤️ Zunera Amber</h1>
+
+<div class="love-letter" id="urduText"></div>
+<div class="translation">
+You are the answered prayer written in my destiny.  
+Will you walk with me in halal love and lifelong companionship?
+</div>
+
+<button onclick="qubool()">Qubool Hai 💍</button>
+<button onclick="sayYes()">Yes ❤️</button>
+</div>
+
+<div id="yesScreen">
+She Said YES 🤍  
+<br>Alhamdulillah
+</div>
+
+<audio id="tasbeeh" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<audio id="nasheed" loop>
+<source src="YOUR_NASHEED_LINK_HERE.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Urdu Typing Effect */
+const text = "زونیرا، تم میری دعا کا وہ جواب ہو جسے اللہ نے قبول کر لیا۔ تم میری روح کا سکون ہو۔ کیا تم زندگی بھر میرا ساتھ دو گی؟";
+let i=0;
+function typeWriter(){
+    if(i<text.length){
+        document.getElementById("urduText").innerHTML+=text.charAt(i);
+        i++;
+        setTimeout(typeWriter,60);
+    }
+}
+typeWriter();
+
+/* Falling Roses */
+function createPetal(){
+    const petal=document.createElement("div");
+    petal.classList.add("petal");
+    petal.innerHTML="🌹";
+    petal.style.left=Math.random()*100+"vw";
+    petal.style.animationDuration=(4+Math.random()*4)+"s";
+    document.body.appendChild(petal);
+    setTimeout(()=>petal.remove(),8000);
+}
+setInterval(createPetal,400);
+
+/* Nasheed Fade In */
+const nasheed=document.getElementById("nasheed");
+document.addEventListener("click",()=>{
+    nasheed.volume=0;
+    nasheed.play();
+    let fade=setInterval(()=>{
+        if(nasheed.volume<0.3){
+            nasheed.volume+=0.02;
+        }else{
+            clearInterval(fade);
+        }
+    },200);
+},{once:true});
+
+/* Qubool Hai */
+function qubool(){
+    document.getElementById("tasbeeh").play();
+}
+
+/* YES ACTION */
+function sayYes(){
+    confetti({particleCount:200,spread:120});
+    document.getElementById("yesScreen").style.display="block";
+
+    /* Heart Rain */
+    for(let j=0;j<30;j++){
+        const heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="💖";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),4000);
+    }
+}
+
+</script>
+
+</body>
+</html>
